@@ -47,17 +47,17 @@ async function createConversation(messageHistory){
 
 
 app.post('/api/message', async (req, res) => {
-    
-    
     try {
       let messageHistory = JSON.parse(req.body.messageHistory); 
-      
+      if (!Array.isArray(messageHistory)) {
+        throw new Error('messageHistory should be an array');
+      }
       let answer1 = '';
       const answer = await createConversation(messageHistory); 
       res.json({aiResponse : answer}) ;
-      
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Something went wrong!' });
+      res.status(500).json({ error: error.message });
     }
   });
+  
