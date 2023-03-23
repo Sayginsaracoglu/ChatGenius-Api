@@ -40,6 +40,11 @@ async function createConversation(messageHistory){
     return answer1;
   }
 
+  app.get('/',(req,res)=>{
+    res.json({message : "API listening (updated)"})
+})
+
+
 app.post('/api/message', async (req, res) => {
     
     
