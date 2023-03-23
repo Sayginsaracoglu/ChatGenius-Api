@@ -48,6 +48,7 @@ async function createConversation(messageHistory){
 
 app.post('/api/message', async (req, res) => {
     try {
+       console.log(req.body.messageHistory) 
       let messageHistory = JSON.parse(req.body.messageHistory); 
       if (!Array.isArray(messageHistory)) {
         throw new Error('messageHistory should be an array');
