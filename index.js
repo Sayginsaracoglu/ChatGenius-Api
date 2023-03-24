@@ -30,8 +30,7 @@ async function createConversation(messageHistory){
     let lastUserInput = messageHistory[messageHistory.length - 1].content;
     console.log(`last user input ${lastUserInput}`)
     const createModerationRequest = {
-        model: "gpt-3.5-turbo",
-        input: lastUserInput,
+        input: "fuck them",
       };
     
     let response = await openai.createModeration(createModerationRequest)
