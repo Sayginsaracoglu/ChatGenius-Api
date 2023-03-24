@@ -24,9 +24,10 @@ app.listen(PORT,()=>{
 
 async function createConversation(messageHistory){
    
-    let lastUserInput = messageHistory[messageHistory.length - 1].content;
 
-    let response =await openai.createModeration({
+    let lastUserInput = messageHistory[messageHistory.length - 1].content;
+    console.log(`last user input ${lastUserInput}`)
+    let response = await openai.createModeration({
         input : lastUserInput
     })
     const flagged = response.results[0].flagged;
