@@ -124,7 +124,7 @@ app.post('/api/message', async (req, res) => {
   
 
 app.post('/api/signup', (req,res)=>{
-  userService.connect(mongoDBConnectionString).then(()=>{
+  userService.connect().then(()=>{
     userService.registerUser(req.body).then((msg)=>{
       res.json({"msg":msg});
       }).catch((msg)=>{
