@@ -32,7 +32,7 @@ async function createConversation(messageHistory){
     
     
     const response = await openai.createModeration({
-        input: "I want to kill them.",
+        input: lastUserInput,
       });
     console.log(response)
     const output = response.data.results[0];
