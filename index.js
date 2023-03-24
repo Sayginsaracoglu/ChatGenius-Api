@@ -26,6 +26,7 @@ async function createConversation(messageHistory){
    
     console.log(typeof messageHistory);
     console.log(messageHistory)
+    console.log(messageHistory[4])
     //let lastUserInput = messageHistory[messageHistory.length - 1].content;
     //console.log(`last user input ${lastUserInput}`)
     // let response = await openai.createModeration({
