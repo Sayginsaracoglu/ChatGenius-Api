@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Configuration, OpenAIApi } = require("openai");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const userService = require("./user-service.js");
 
 /*Config */
 dotenv.config();
@@ -121,3 +122,13 @@ app.post('/api/message', async (req, res) => {
     }
   });
   
+
+app.post('/api/signup', (req,res)=>{
+  userService.registerUser(req.body).then((msg)=>{
+    res.json({"msg":msg});
+    }).catch((msg)=>{
+    res.json({"msg":msg});
+  });
+
+
+})
