@@ -23,24 +23,59 @@ app.listen(PORT,()=>{
 })
 
 async function createConversation(messageHistory){
-   
-    // console.log(typeof messageHistory);
-    // console.log(messageHistory)
-    // console.log('last        ' + messageHistory[messageHistory.length - 1 ].content)
+
     let lastUserInput = messageHistory[messageHistory.length - 1].content;
-    console.log(`last user input ${lastUserInput}`)
-    
     
     const response = await openai.createModeration({
         input: lastUserInput,
       });
-    console.log(response)
     const output = response.data.results[0];
     const flagged = output.flagged;
-    console.log(flagged)
+    
+    if (flagged) {
+        const categories = response.data.results[0].categories;
+        let maxScore = 0;
+        let maxCategory = '';
+      
+        for (const category in categories) {
+            if (categories[category] && response.data.results[0].category_scores[category] > maxScore) {
+              maxScore = response.data.results[0].category_scores[category];
+              maxCategory = category;
+            }
+          }
+          
+          let warningMessage = '';
+          
+          switch (maxCategory) {
+            case 'hate':
+              warningMessage = 'Warning!!! Your message has been flagged for containing hate speech. Please refrain from using such language in the future.';
+              break;
+            case 'hate/threatening':
+              warningMessage = 'Warning!!! Your message has been flagged for containing threatening language. Please refrain from using such language in the future.';
+              break;
+            case 'self-harm':
+              warningMessage = 'Warning!!! Your message has been flagged for containing self-harm language. Please refrain from using such language in the future.';
+              break;
+            case 'sexual':
+              warningMessage = 'Warning!!! Your message has been flagged for containing sexual language. Please refrain from using such language in the future.';
+              break;
+            case 'sexual/minors':
+              warningMessage = 'Warning!!! Your message has been flagged for containing sexual content involving minors. This is illegal and will not be tolerated.';
+              break;
+            case 'violence':
+              warningMessage = 'Warning!!! Your message has been flagged for containing violent language. Please refrain from using such language in the future.';
+              break;
+            case 'violence/graphic':
+              warningMessage = 'Warning!!! Your message has been flagged for containing graphic violence. This is not acceptable and will not be tolerated.';
+              break;
+            default:
+              warningMessage = 'Warning!!! Your message has been flagged for inappropriate content. Please refrain from using such language in the future.';
+              break;
+          }
+      
+        return warningMessage;
+      }
      
-
-   // console.log("flagged " + flagged)
     let completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: messageHistory,
