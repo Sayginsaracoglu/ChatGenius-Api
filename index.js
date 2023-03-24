@@ -29,10 +29,10 @@ async function createConversation(messageHistory){
     // console.log('last        ' + messageHistory[messageHistory.length - 1 ].content)
     let lastUserInput = messageHistory[messageHistory.length - 1].content;
     console.log(`last user input ${lastUserInput}`)
-    // let response = await openai.createModeration({
-    //     input : lastUserInput
-    // })
-    // const flagged = response.results[0].flagged;
+     let response = await openai.createModeration({
+         input : lastUserInput
+     })
+     const flagged = response.results[0].flagged;
 
    // console.log("flagged " + flagged)
     let completion = await openai.createChatCompletion({
