@@ -27,6 +27,7 @@ async function createConversation(messageHistory){
     let lastUserInput = messageHistory[messageHistory.length - 1].content;
 
     let response =await openai.createModeration({
+        model: "gpt-3.5-turbo",
         input : lastUserInput
     })
     let output = response.results[0]
