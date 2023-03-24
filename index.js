@@ -35,8 +35,9 @@ async function createConversation(messageHistory){
         input: "I want to kill them.",
       });
     console.log(response)
-    //const flagged = response.results[0].flagged;
     
+    const flagged = response.results[0].flagged;
+    console.log(flagged)
      
 
    // console.log("flagged " + flagged)
