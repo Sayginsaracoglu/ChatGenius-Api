@@ -29,7 +29,7 @@ async function createConversation(messageHistory){
     let response =await openai.createModeration({
         input : lastUserInput
     })
-    let output = response[0].results
+    let output = response.results[0]
     console.log("response " + output)
     let completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
