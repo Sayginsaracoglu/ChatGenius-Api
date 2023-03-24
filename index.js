@@ -27,11 +27,11 @@ async function createConversation(messageHistory){
     let lastUserInput = messageHistory[messageHistory.length - 1].content;
 
     let response =await openai.createModeration({
-        model: "gpt-3.5-turbo",
         input : lastUserInput
     })
-    let output = response.results[0]
-    console.log("response " + output)
+    const flagged = response.results[0].flagged;
+
+    console.log("flagged " + flagged)
     let completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: messageHistory,
