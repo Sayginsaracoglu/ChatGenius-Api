@@ -24,17 +24,13 @@ app.listen(PORT,()=>{
 
 async function createConversation(messageHistory){
    
-    console.log(typeof messageHistory);
-    console.log(messageHistory)
-    console.log('last' + messageHistory[messageHistory.length() - 1 ].content)
-    //let lastUserInput = messageHistory[messageHistory.length - 1].content;
-    //console.log(`last user input ${lastUserInput}`)
-    // let response = await openai.createModeration({
-    //     input : lastUserInput
-    // })
-    // const flagged = response.results[0].flagged;
-
-   // console.log("flagged " + flagged)
+    let lastUserInput = messageHistory[messageHistory.length() - 1].content;
+    
+     let response = await openai.createModeration({
+         input : lastUserInput
+     })
+     const flagged = response.results[0].flagged;
+     console.log("flagged " + flagged)
     let completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: messageHistory,
