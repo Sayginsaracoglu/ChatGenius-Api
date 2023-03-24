@@ -12,6 +12,8 @@ let userSchema = new Schema({
     role: String
 });
 
+let User;
+
 module.exports.connect = function () {
     return new Promise(function (resolve, reject) {
         let db = mongoose.createConnection(mongoDBConnectionString, { useNewUrlParser: true });
