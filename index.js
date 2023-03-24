@@ -24,6 +24,12 @@ app.listen(PORT,()=>{
 
 async function createConversation(messageHistory){
    
+    let lastUserInput = messageHistory[messageHistory.length - 1].content;
+
+    let response = openai.createModeration({
+        input : lastUserInput
+    })
+    console.log("response " + response)
     let completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: messageHistory,
@@ -42,6 +48,9 @@ async function createConversation(messageHistory){
       }
       messageHistory.push(completion.data.choices[0].message);
     }
+
+
+
     return answer1;
   }
 
