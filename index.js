@@ -36,7 +36,7 @@ async function createConversation(messageHistory){
       });
     console.log(response)
     //const flagged = response.results[0].flagged;
-    await openai.createModeration();
+    
      
 
    // console.log("flagged " + flagged)
