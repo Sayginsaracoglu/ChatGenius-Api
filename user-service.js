@@ -56,25 +56,22 @@ module.exports.registerUser = function (userData) {
     });
 };
 
-// module.exports.registerUser = async function (userData) {
-//     return  bcryptjs.hash(userData.password, 5)
-//         .then((hashedData) => {
-//             console.log(hashedData);
-//             userData.password = hashedData;
+module.exports.checkUser = function (userData) {
+    return new Promise(function (resolve, reject) {
 
-//             const newUser = new User(userData);
+        User.findOne({ email: userData.email })
+            .exec()
+            .then(user => {
+                bcrypt.compare(userData.password, user.password).then(res => {
+                    if (res === true) {
+                        resolve(user);
+                    } else {
+                        reject("Incorrect password for user " + userData.userName);
+                    }
+                });
+            }).catch(err => {
+                reject("Unable to find user " + userData.userName);
+            });
+    });
+};
 
-//             newUser.save();
-//         })
-//         .then(() => {
-//             console.log("User " + userData.email + " successfully registered");
-//             return "User " + userData.email + " successfully registered";
-//         })
-//         .catch((err) => {
-//             if (err.code === 11000) {
-//                 throw new Error("Email already taken");
-//             } else {
-//                 throw new Error("There was an error creating the user: " + err);
-//             }
-//         });
-// };
