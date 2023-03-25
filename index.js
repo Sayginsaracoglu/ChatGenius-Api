@@ -12,9 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use((req, res) => {
-  res.status(404).end();
-});
+
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -24,15 +22,15 @@ const configuration = new Configuration({
   /* Server */
 const PORT = process.env.PORT || 3000;
 
-// app.listen(PORT,()=>{
+//  app.listen(PORT,()=>{
 //     console.log(PORT)
-// })
+//  })
 
 userService.connect().then(()=>{
-  app.listen(PORT, ()=>{
-      console.log("App listening on: " + PORT);
-  });
-
+   app.listen(PORT, ()=>{
+       console.log("App listening on: " + PORT);
+   });
+  console.log("Connected to database")
 }).catch((e)=>{
   console.log(e);
 });
