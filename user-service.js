@@ -34,49 +34,49 @@ module.exports.connect = function () {
 };
 
 
-// module.exports.registerUser = function (userData) {
-//     return new Promise(function (resolve, reject) {
-//             bcryptjs.hash(userData.password,5).then((hashedData)=>{
-//                 console.log(hashedData)
-//                 userData.password=hashedData;
+module.exports.registerUser = function (userData) {
+    return new Promise(function (resolve, reject) {
+            bcryptjs.hash(userData.password,5).then((hashedData)=>{
+                console.log(hashedData)
+                userData.password=hashedData;
 
-//                 let newUser = new User(userData);
+                let newUser = new User(userData);
 
-//                 newUser.save((err) => {
-//                     if (err) {
-//                         if (err.code == 11000) {
-//                             reject("Email already taken");
-//                         } else {
-//                             reject("There was an error creating the user: " + err);
-//                         }
+                newUser.save((err) => {
+                    if (err) {
+                        if (err.code == 11000) {
+                            reject("Email already taken");
+                        } else {
+                            reject("There was an error creating the user: " + err);
+                        }
     
-//                     } else {
-//                         resolve("User " + userData.email + " successfully registered");
-//                     }
-//                 });
-//             });
-//     });
-// };
-
-module.exports.registerUser = async function (userData) {
-    return  bcryptjs.hash(userData.password, 5)
-        .then((hashedData) => {
-            console.log(hashedData);
-            userData.password = hashedData;
-
-            const newUser = new User(userData);
-
-            return newUser.save();
-        })
-        .then(() => {
-            console.log("User " + userData.email + " successfully registered");
-            return "User " + userData.email + " successfully registered";
-        })
-        .catch((err) => {
-            if (err.code === 11000) {
-                throw new Error("Email already taken");
-            } else {
-                throw new Error("There was an error creating the user: " + err);
-            }
-        });
+                    } else {
+                        resolve("User " + userData.email + " successfully registered");
+                    }
+                });
+            });
+    });
 };
+
+// module.exports.registerUser = async function (userData) {
+//     return  bcryptjs.hash(userData.password, 5)
+//         .then((hashedData) => {
+//             console.log(hashedData);
+//             userData.password = hashedData;
+
+//             const newUser = new User(userData);
+
+//             newUser.save();
+//         })
+//         .then(() => {
+//             console.log("User " + userData.email + " successfully registered");
+//             return "User " + userData.email + " successfully registered";
+//         })
+//         .catch((err) => {
+//             if (err.code === 11000) {
+//                 throw new Error("Email already taken");
+//             } else {
+//                 throw new Error("There was an error creating the user: " + err);
+//             }
+//         });
+// };
