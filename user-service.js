@@ -7,14 +7,6 @@ let Schema = mongoose.Schema;
 dotenv.config();
 let mongoDBConnectionString = process.env.MONGO_DB_CONNECTION_STRING;
 
-let userSchema = new Schema({
-    email: {
-        type: String,
-        unique: true
-    },
-    password: String,
-    role: String
-});
 
 let User;
 
@@ -32,6 +24,20 @@ module.exports.connect = function () {
         });
     });
 };
+
+
+
+
+
+let userSchema = new Schema({
+    email: {
+        type: String,
+        unique: true
+    },
+    password: String,
+    role: String
+});
+
 
 
 module.exports.registerUser = function (userData) {
