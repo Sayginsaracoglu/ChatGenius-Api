@@ -146,7 +146,7 @@ app.post('/api/signup', (req,res)=>{
   });
 });
 
-app.post("/api/user/login", (req, res) => {
+app.post("/api/login", (req, res) => {
   userService.checkUser(req.body)
   .then((user) => {
       res.json({ "message": "login successful"});
