@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const bcryptjs =require("bcryptjs");
+const dotenv = require('dotenv');
 
+/*CONFIG */
 let Schema = mongoose.Schema;
+dotenv.config();
+let mongoDBConnectionString = process.env.MONGO_DB_CONNECTION_STRING;
 
 let userSchema = new Schema({
     email: {
@@ -28,6 +32,7 @@ module.exports.connect = function () {
         });
     });
 };
+
 
 module.exports.registerUser = function (userData) {
     return new Promise(function (resolve, reject) {
