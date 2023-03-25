@@ -146,6 +146,16 @@ app.post('/api/signup', (req,res)=>{
   });
 });
 
+app.post("/api/user/login", (req, res) => {
+  userService.checkUser(req.body)
+  .then((user) => {
+      res.json({ "message": "login successful"});
+  }).catch(msg => {
+      res.status(422).json({ "message": msg });
+  });
+});
+
+
 
 userService.connect()
 .then(() => {
