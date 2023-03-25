@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcryptjs =require("bcryptjs");
+const bcrypt =require("bcryptjs");
 const dotenv = require('dotenv');
 
 /*CONFIG */
@@ -8,11 +8,20 @@ dotenv.config();
 let mongoDBConnectionString = process.env.MONGO_DB_CONNECTION_STRING;
 
 
-let User;
+let userSchema = new Schema({
+    email: {
+        type: String,
+        unique: true
+    },
+    password: String,
+    role: String
+});
 
+let User;
+//, { useNewUrlParser: true }
 module.exports.connect = function () {
     return new Promise(function (resolve, reject) {
-        let db = mongoose.createConnection(mongoDBConnectionString, { useNewUrlParser: true });
+        let db = mongoose.createConnection(mongoDBConnectionString);
 
         db.on('error', (err) => {
             reject(err); // reject the promise with the provided error
@@ -26,41 +35,24 @@ module.exports.connect = function () {
 };
 
 
-
-
-
-let userSchema = new Schema({
-    email: {
-        type: String,
-        unique: true
-    },
-    password: String,
-    role: String
-});
-
-
-
 module.exports.registerUser = function (userData) {
     return new Promise(function (resolve, reject) {
-            bcryptjs.hash(userData.password,5).then((hashedData)=>{
-                console.log(hashedData)
-                userData.password=hashedData;
+        bcrypt.hash(userData.password, 10).then(hash => {
 
-                let newUser = new User(userData);
+            userData.password = hash;
 
-                newUser.save((err) => {
-                    if (err) {
-                        if (err.code == 11000) {
-                            reject("Email already taken");
-                        } else {
-                            reject("There was an error creating the user: " + err);
-                        }
-    
-                    } else {
-                        resolve("User " + userData.email + " successfully registered");
-                    }
-                });
-            });
+            let newUser = new User(userData);
+
+            newUser.save().then(() => {
+                resolve("User " + userData.email + " successfully registered");  
+            }).catch(err => {
+                if (err.code == 11000) {
+                    reject(`${userData.email} already taken`);
+                } else {
+                    reject("There was an error creating the user: " + err);
+                }
+            })
+        }).catch(err => reject(err));
     });
 };
 
