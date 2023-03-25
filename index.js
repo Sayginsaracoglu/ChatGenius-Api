@@ -22,18 +22,18 @@ const configuration = new Configuration({
   /* Server */
 const PORT = process.env.PORT || 3000;
 
- app.listen(PORT,()=>{
-    console.log(PORT)
- })
+//  app.listen(PORT,()=>{
+//     console.log(PORT)
+//  })
 
-userService.connect().then(()=>{
-  //  app.listen(PORT, ()=>{
-  //      console.log("App listening on: " + PORT);
-  //  });
-  console.log("Connected to database")
-}).catch((e)=>{
-  console.log(e);
-});
+// userService.connect().then(()=>{
+//   //  app.listen(PORT, ()=>{
+//   //      console.log("App listening on: " + PORT);
+//   //  });
+//   console.log("Connected to database")
+// }).catch((e)=>{
+//   console.log(e);
+// });
 
 
 
@@ -143,5 +143,15 @@ app.post('/api/signup', (req,res)=>{
       res.json({"msg":msg});
       }).catch((msg)=>{
       res.json({"msg":msg});
-    });
   });
+});
+
+
+userService.connect()
+.then(() => {
+    app.listen(PORT, () => { console.log("API listening on: " + PORT) });
+})
+.catch((err) => {
+    console.log("unable to start the server: " + err);
+    process.exit();
+});
