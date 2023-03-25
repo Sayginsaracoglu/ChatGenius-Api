@@ -22,14 +22,14 @@ const configuration = new Configuration({
   /* Server */
 const PORT = process.env.PORT || 3000;
 
-//  app.listen(PORT,()=>{
-//     console.log(PORT)
-//  })
+ app.listen(PORT,()=>{
+    console.log(PORT)
+ })
 
 userService.connect().then(()=>{
-   app.listen(PORT, ()=>{
-       console.log("App listening on: " + PORT);
-   });
+  //  app.listen(PORT, ()=>{
+  //      console.log("App listening on: " + PORT);
+  //  });
   console.log("Connected to database")
 }).catch((e)=>{
   console.log(e);
