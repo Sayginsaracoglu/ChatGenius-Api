@@ -58,8 +58,8 @@ module.exports.connect = function () {
 //     });
 // };
 
-module.exports.registerUser = function (userData) {
-    return bcryptjs.hash(userData.password, 5)
+module.exports.registerUser = async function (userData) {
+    return  bcryptjs.hash(userData.password, 5)
         .then((hashedData) => {
             console.log(hashedData);
             userData.password = hashedData;
@@ -69,6 +69,7 @@ module.exports.registerUser = function (userData) {
             return newUser.save();
         })
         .then(() => {
+            console.log("User " + userData.email + " successfully registered");
             return "User " + userData.email + " successfully registered";
         })
         .catch((err) => {
